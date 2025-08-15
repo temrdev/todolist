@@ -157,14 +157,12 @@ li.done .task-text {
 
 @media (max-width: 600px) {
     body {
-        font-size: 16px;
-        padding: 10px;
+        font-size: clamp(14px, 2vw, 18px);
     }
 
     section {
-        margin: 20px auto;
-        padding: 16px;
-        border-radius: 6px;
+        width: 90%;
+        max-width: 700px;
     }
 
     h1 {

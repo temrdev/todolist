@@ -119,30 +119,47 @@ function updateCountdown() {
     const hours = Math.floor((diff / 3600) % 24);
     const minutes = Math.floor((diff / 60) % 60);
     const seconds = diff % 60;
-    document.getElementById("summerTimerText").innerText = 
+    document.getElementById("timeLeft").innerText = 
     `${days}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)} left to the end of summer!`;
 }
 
 
 function checkOutstandingTasks() {
-    const tasks = document.querySelectorAll("li:not(.done)");
+    const allTasks = document.querySelectorAll("#taskList li");
+    const pendingTasks = document.querySelectorAll("#taskList li:not(.done)");
+    const doneTasks = document.querySelectorAll("#taskList li.done");
     const taskWarning = document.getElementById("taskWarning");
 
-    const messages = [
-        { min: 7, text: count => `💀 Bro... ${count}?? That is not a to-do list, that is a horror movie.`, color: "hsl(0, 100%, 50%)" },
-        { min: 4, text: count => `😏 You have ${count} tasks pending! Better start now...`, color: "orange" },
-        { min: 2, text: count => `👍You are doing great! Only ${count} tasks left. Keep going!`, color: "yellow" },
-        { min: 1, text: () => `🔥 Just one more to go!`, color: "lightgreen" },
-        { min: 0, text: () => `🎉 Freedom! Go enjoy life!`, color: "green" }
-    ];
-
-    const count = tasks.length;
     taskWarning.style.display = "block";
+
+    // CASE 1: No tasks at all
+    if (allTasks.length === 0) {
+        taskWarning.textContent = "📝 Add a task";
+        taskWarning.style.color = "gray";
+        return;
+    }
+
+    // CASE 2: All tasks done
+    if (doneTasks.length === allTasks.length) {
+        taskWarning.textContent = "🎉 Freedom! Go enjoy life!";
+        taskWarning.style.color = "green";
+        return;
+    }
+
+    // CASE 3: Some tasks pending — use messages array
+    const count = pendingTasks.length;
+    const messages = [
+        { min: 7, text: c => `💀 Bro... ${c}?? That is not a to-do list, that is a horror movie.`, color: "hsl(0, 100%, 50%)" },
+        { min: 4, text: c => `😏 You have ${c} tasks pending! Better start now...`, color: "orange" },
+        { min: 2, text: c => `👍 You are doing great! Only ${c} tasks left. Keep going!`, color: "yellow" },
+        { min: 1, text: () => `🔥 Just one more to go!`, color: "lightgreen" }
+    ];
 
     const match = messages.find(msg => count >= msg.min);
     taskWarning.textContent = match.text(count);
     taskWarning.style.color = match.color;
 }
+
 
 
 setInterval(updateCountdown, 1000);
