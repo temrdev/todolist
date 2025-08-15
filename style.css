@@ -18,6 +18,10 @@ section {
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
+#todolistText {
+    font-size: 2rem;
+}
+
 .input-row {
     display: flex;
     align-items: center;
@@ -147,4 +151,68 @@ li.done .task-text {
     display: none;
     color: hsl(0, 100%, 50%);
     font-size: 2rem;
+}
+
+/* mobile styles */
+
+@media (max-width: 600px) {
+    body {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    section {
+        margin: 20px auto;
+        padding: 16px;
+        border-radius: 6px;
+    }
+
+    h1 {
+        font-size: 1.4rem;
+        text-align: center;
+    }
+
+    .input-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #taskInput {
+        width: 100%;
+        margin-right: 0;
+        font-size: 1rem;
+    }
+
+    #addTask {
+        width: 100%;
+        margin: 0;
+        font-size: 1rem;
+    }
+
+    #taskList li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .btn-group {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .summerTimer {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+
+    #summerTimerText {
+        font-size: 1.2rem;
+        line-height: 1.4;
+    }
+
+    #taskWarning {
+        font-size: 1.2rem;
+        text-align: center;
+    }
 }
