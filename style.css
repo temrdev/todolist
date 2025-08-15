@@ -58,7 +58,7 @@ section {
 }
 
 #taskList li {
-    background: hsl(0, 0%, 90%);
+    background-color: hsl(0, 0%, 90%);
     margin-bottom: 8px;
     padding: 8px;
     border-radius: 4px;
@@ -84,8 +84,8 @@ section {
     opacity: 0.6;
 }
 
-li.done {
-    background-color: hsl(120, 40%, 80%); 
+#taskList li.done {
+    background-color: hsl(0, 0%, 80%);
     transform: scale(0.98);
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
@@ -129,20 +129,22 @@ li.done .task-text {
 /* summer timer (countdown) */
 
 .summerTimer {
-    font-size: 1.5rem;
+    font-size: 2rem;
     background-color: hsl(0, 0%, 90%);
-    padding: 15px 25px;
+    padding: 10px 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);    
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);   
+    margin-bottom: 15px; 
 }
 
 #summerTimerText {
     font-weight:400;
     margin-bottom: 20px;
+    font-size: 2rem;
 }
 
 #taskWarning {
     display: none;
     color: hsl(0, 100%, 50%);
-    fon
+    font-size: 2rem;
 }

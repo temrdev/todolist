@@ -103,35 +103,48 @@ loadTasks();
 
 function updateCountdown() {
     const now = new Date();
-    const endOfSummer = new Date(now.getFullYear(), 7,31,23,59,59); // 7 = august
-    const diff = endOfSummer - now;
+    const endOfSummer = new Date(now.getFullYear(), 7, 31, 23, 59, 59); // August 31
+    let diff = Math.floor((endOfSummer - now) / 1000);
+
+    const countdownElem = document.getElementById("countdown");
 
     if (diff <= 0) {
-        document.getElementById("countdown").innerText = "Summer is ended!";
+        countdownElem.innerText = "Summer is ended!";
         return;
     }
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
+    const pad = num => String(num).padStart(2, "0");
 
-    document.getElementById("countdown").innerText = 
-        `${days}d ${hours}:${minutes}:${seconds}`;
+    const days = Math.floor(diff / (60 * 60 * 24));
+    const hours = Math.floor((diff / 3600) % 24);
+    const minutes = Math.floor((diff / 60) % 60);
+    const seconds = diff % 60;
+    document.getElementById("summerTimerText").innerText = 
+    `${days}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)} left to the end of summer!`;
 }
+
 
 function checkOutstandingTasks() {
-    const tasks = document.querySelectorAll(`li:not(.done)`);
+    const tasks = document.querySelectorAll("li:not(.done)");
     const taskWarning = document.getElementById("taskWarning");
 
-    if (tasks.length >= 5) {
-        taskWarning.textContent = `😏 You have ${tasks.length} tasks pending! Better start now...`;
-        taskWarning.style.display = 'block';
-    }
-    else {
-        taskWarning.style.display = 'none';
-    }
+    const messages = [
+        { min: 7, text: count => `💀 Bro... ${count}?? That is not a to-do list, that is a horror movie.`, color: "hsl(0, 100%, 50%)" },
+        { min: 4, text: count => `😏 You have ${count} tasks pending! Better start now...`, color: "orange" },
+        { min: 2, text: count => `👍You are doing great! Only ${count} tasks left. Keep going!`, color: "yellow" },
+        { min: 1, text: () => `🔥 Just one more to go!`, color: "lightgreen" },
+        { min: 0, text: () => `🎉 Freedom! Go enjoy life!`, color: "green" }
+    ];
+
+    const count = tasks.length;
+    taskWarning.style.display = "block";
+
+    const match = messages.find(msg => count >= msg.min);
+    taskWarning.textContent = match.text(count);
+    taskWarning.style.color = match.color;
 }
+
+
 setInterval(updateCountdown, 1000);
 updateCountdown();
 checkOutstandingTasks();
