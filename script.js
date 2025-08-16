@@ -3,7 +3,6 @@ const addTaskBtn = document.getElementById("addTask");
 const taskList = document.getElementById("taskList");
 
 
-
 // Load tasks from localStorage
 function loadTasks() {
     const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
@@ -25,8 +24,8 @@ function saveTasks() {
 // Add task to DOM and localStorage
 function addTaskToDOM(task, done = false) {
     const li = document.createElement("li");
+    li.draggable = true; // allow dragging
 
-    // Тext
     const span = document.createElement("span");
     span.textContent = task;
     span.className = "task-text";
@@ -34,11 +33,9 @@ function addTaskToDOM(task, done = false) {
 
     if (done) li.classList.add("done");
 
-    // Container of buttons on the right
     const btnGroup = document.createElement("div");
     btnGroup.className = "btn-group";
 
-    // Done / Undo
     const doneBtn = document.createElement("button");
     doneBtn.className = "done-btn";
     doneBtn.textContent = li.classList.contains("done") ? "Undo" : "Done";
@@ -51,7 +48,6 @@ function addTaskToDOM(task, done = false) {
     });
     btnGroup.appendChild(doneBtn);
 
-    // Remove
     const removeBtn = document.createElement("button");
     removeBtn.textContent = "Remove";
     removeBtn.className = "remove";
@@ -68,7 +64,6 @@ function addTaskToDOM(task, done = false) {
 
     li.appendChild(btnGroup);
 
-    // Starting animation
     li.classList.add("fade-in-start");
     taskList.appendChild(li);
     requestAnimationFrame(() => li.classList.add("fade-in-end"));
@@ -122,6 +117,8 @@ function updateCountdown() {
     document.getElementById("timeLeft").innerText = 
     `${days}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)} left to the end of summer!`;
 }
+setInterval(updateCountdown, 1000);
+updateCountdown();
 
 
 function checkOutstandingTasks() {
@@ -160,8 +157,78 @@ function checkOutstandingTasks() {
     taskWarning.style.color = match.color;
 }
 
-
-
-setInterval(updateCountdown, 1000);
-updateCountdown();
 checkOutstandingTasks();
+
+// Editing arrangement of tasks list (dragging)
+
+const editTaskBtn = document.getElementById("editTask");
+let editMode = false; 
+let dragSrcEl = null;
+
+function toggleEditMode() {
+    editMode = !editMode;
+    const tasks = document.querySelectorAll("#taskList li");
+
+    tasks.forEach(li => {
+        li.draggable = editMode; 
+        li.style.cursor = editMode ? "grab" : "default";
+    });
+
+    // Visual feedback for button
+    editTaskBtn.classList.toggle("active", editMode);
+}
+
+// Drag logic
+function handleDragStart(e) {
+    if (!editMode) return;
+    dragSrcEl = this;
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/html", this.outerHTML);
+    this.classList.add("dragging");
+}
+
+function handleDragOver(e) {
+    if (!editMode) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    return false;
+}
+
+function handleDrop(e) {
+    if (!editMode) return;
+    e.stopPropagation();
+
+    if (dragSrcEl !== this) {
+        dragSrcEl.parentNode.removeChild(dragSrcEl);
+        this.insertAdjacentHTML("beforebegin", e.dataTransfer.getData("text/html"));
+        const newEl = this.previousSibling;
+
+        addDnDHandlers(newEl); // rebind events
+        saveTasks(); // save new order
+    }
+    return false;
+}
+
+function handleDragEnd() {
+    this.classList.remove("dragging");
+}
+
+// Attach drag events
+function addDnDHandlers(el) {
+    el.addEventListener("dragstart", handleDragStart, false);
+    el.addEventListener("dragover", handleDragOver, false);
+    el.addEventListener("drop", handleDrop, false);
+    el.addEventListener("dragend", handleDragEnd, false);
+}
+
+// Initial setup for future tasks
+function enableDnDOnTasks() {
+    const tasks = document.querySelectorAll("#taskList li");
+    tasks.forEach(addDnDHandlers);
+}
+
+// Toggle edit mode on button click
+editTaskBtn.addEventListener("click", () => {
+    toggleEditMode();
+    enableDnDOnTasks();
+});

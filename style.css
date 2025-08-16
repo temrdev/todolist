@@ -10,10 +10,10 @@ body {
 }
 
 section {
-    max-width: 700px;
+    max-width: 800px;
     margin: 40px auto;
     background: hsl(0, 0%, 60%);
-    padding: 24px;
+    padding: 30px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
@@ -45,31 +45,64 @@ section {
     margin: 10px;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
+#addTask:hover { background: hsl(39, 100%, 60%); transform: scale(1.05);}
+#addTask:active{ background: hsl(39, 100%, 70%); transform: scale(0.95);}
 
-#addTask:hover{
-    background: hsl(39, 100%, 60%);
-    transform: scale(1.05);
+.svg-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.svg-btn .icon {
+  transition: transform 0.25s ease, stroke 0.25s ease;
+  transform-origin: center center; 
+}
+.svg-btn .icon path {
+  stroke: hsl(39, 100%, 50%);
+  transition: stroke 0.25s ease;
+}
+.svg-btn:hover .icon { transform: scale(1.1);}
+.svg-btn:hover .icon path { stroke: hsl(39, 100%, 60%);}
+.svg-btn:active .icon { transform: scale(0.95);}
+.svg-btn:active .icon path { stroke: hsl(39, 100%, 70%);}
+
+.dragging {
+  opacity: 0.4;
+}
+#editTask.active .icon path {
+  stroke: hsl(200, 100%, 50%); 
 }
 
-#addTask:active{
-    background: hsl(39, 100%, 70%);
-}
 
 #taskList {
     list-style: none;
     padding: 0;
     margin-bottom: 16px;
 }
-
 #taskList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;      
+    min-width: 0;          
     background-color: hsl(0, 0%, 90%);
     margin-bottom: 8px;
     padding: 8px;
     border-radius: 4px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+
+.task-text {
+    overflow: hidden;      
+    text-overflow: ellipsis;
+    white-space: nowrap;   
+    flex: 1 1 auto;        
+    min-width: 0;           
 }
 
 .fade-in-start { opacity: 0; transform: translateY(-10px); }
@@ -82,7 +115,7 @@ section {
     gap: 8px;
 }
 
-.completed {   /* Completed task */
+.completed {   
     text-decoration: line-through;
     color: gray;
     opacity: 0.6;
@@ -109,7 +142,7 @@ li.done .task-text {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 .done-btn:hover { background: hsl(120, 50%, 50%); transform: scale(1.05); }
-
+.done-btn:active { background: hsl(120, 50%, 60%); transform: scale(0.95);}
 
 .fade-in-start { opacity: 0; transform: translateY(-10px); }
 .fade-in-end { opacity: 1; transform: translateY(0); transition: all 0.3s ease; }
@@ -125,10 +158,8 @@ li.done .task-text {
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
-
-.remove:hover{
-    background-color: hsl(0, 100%, 50%);
-}
+.remove:hover{ background-color: hsl(0, 100%, 50%); transform: scale(1.05);}
+.remove:active{ background-color: hsl(0, 100%, 60%); transform: scale(0.95);}
 
 /* summer timer (countdown) */
 
@@ -152,6 +183,7 @@ li.done .task-text {
     color: hsl(0, 100%, 50%);
     font-size: 2rem;
 }
+
 
 /* mobile styles */
 
