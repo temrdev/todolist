@@ -52,6 +52,29 @@ function addTaskToDOM(task, done = false) {
     removeBtn.textContent = "Remove";
     removeBtn.className = "remove";
     removeBtn.addEventListener("click", () => {
+        const modal = document.createElement("div");
+        modal.classList.add("modal");
+        modal.innerHTML = `
+            <div class="modal-content">
+                <p>Are you sure you want to delete this task?</p>
+                <button class="confirm">Yes</button>
+                <button class="cancel">No</button>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+
+        modal.querySelector(".confirm").addEventListener("click", () => {
+            li.remove();
+            saveTasks();
+            checkOutstandingTasks();
+            modal.remove();
+        });
+
+        modal.querySelector(".cancel").addEventListener("click", () => {
+            modal.remove();
+        });
+        
         requestAnimationFrame(() => li.classList.add("fade-out"));
         li.addEventListener("transitionend", () => {
             li.remove();
@@ -204,7 +227,7 @@ function handleDrop(e) {
         const newEl = this.previousSibling;
 
         addDnDHandlers(newEl); // rebind events
-        saveTasks(); // save new order
+        saveTasks(); 
     }
     return false;
 }
