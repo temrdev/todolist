@@ -162,19 +162,46 @@ li.done .task-text {
 .remove:active{ background-color: hsl(0, 100%, 60%); transform: scale(0.95);}
 
 .modal {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0,0,0,0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0; 
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 9999;
+}
+.modal.show{
+    opacity: 1;
+    pointer-events: auto;
 }
 .modal-content {
   background: white;
   padding: 20px;
   border-radius: 8px;
   text-align: center;
+}
+.modal-content button {
+    margin: 5px;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-content .confirm {
+    background: red;
+    color: white;
+}
+
+.modal-content .cancel {
+    background: gray;
+    color: white;
 }
 
 /* summer timer (countdown) */
