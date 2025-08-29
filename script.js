@@ -67,7 +67,14 @@ async function updateFact() {
 }
 updateFact(); setInterval(updateFact, 24 * 60 * 60 * 1000);
 
-
+const hint = document.getElementById("hint");
+if (localStorage.getItem("hintDismissed") === "false") {
+    hint.classList.add("hidden");
+}
+hint.addEventListener("click", () => {
+    hint.classList.add("hidden");
+    localStorage.setItem("hintDismissed", "true");
+});
 
 const taskInput = document.getElementById("taskInput");
 const addTaskBtn = document.getElementById("addTask");

@@ -14,6 +14,8 @@ body {
 header {
     background-color: hsl(0, 0%,30%);
     border-radius: 15px;
+    margin-top: -20px;
+    padding-top: 20px;
 }
 
 .headerText {
@@ -31,9 +33,9 @@ header {
 /* ================= Section ================= */
 section {
     max-width: 800px;
-    margin: 40px auto;
+    margin: 20px auto;
     background: hsl(0, 0%, 60%);
-    padding: 30px;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
@@ -41,6 +43,7 @@ section {
 #todolistText {
     font-size: 2rem;
     text-align: center;
+    margin-top: 0px;
 }
 
 .input-row {
@@ -98,6 +101,17 @@ section {
   stroke: hsl(200, 100%, 50%); 
 }
 
+.hint {
+    color: hsl(0, 0%, 30%);
+    opacity: 0.7;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: opacity 0.5s ease;
+}
+.hint:hover {color: hsl(0, 0%, 40%);}
+.hint.hidden{display: none;}
+
 /* ================= Task List ================= */
 #taskList {
     list-style: none;
@@ -151,18 +165,6 @@ li.done .task-text {
     text-decoration: line-through;
     opacity: 0.6;
 }
-
-.done-btn {
-    background: hsl(120, 50%, 40%);
-    color: white;
-    border: none;
-    padding: 4px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-.done-btn:hover { background: hsl(120, 50%, 50%); transform: scale(1.05); }
-.done-btn:active { background: hsl(120, 50%, 60%); transform: scale(0.95);}
 
 /* ================= Fade Animations ================= */
 .fade-in-start { opacity: 0; transform: translateY(-10px); }
@@ -253,18 +255,19 @@ li.done .task-text {
     }
 
     body {
-        font-size: clamp(20px, 2vw, 18px);
+        font-size: clamp(15px, 2vw, 18px);
     }
 
     header {
         border-radius: 10px;
-        padding: 10px;
+        padding: 5px;
+        padding-top: 20px;
     }
 
     .headerText {
-        font-size: 1.2rem;
-        margin: 5px 0;
-        padding: 5px;
+        font-size: 1.3rem;
+        margin: 3px 0;
+        padding: 3px;
     }
     section {
         margin: 20px 10px;
@@ -300,6 +303,9 @@ li.done .task-text {
         font-size: 1rem;
     }
 
+    .hint {
+        font-size: 1rem;
+    }
     #taskList li {
         flex-direction: column;
         align-items: flex-start;
