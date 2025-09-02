@@ -1,4 +1,11 @@
 /* ================= General ================= */
+:root {
+    --primary: hsl(39, 100%, 50%);
+    --primary-hover: hsl(39, 100%, 60%);
+    --primary-active: hsl(39, 100%, 70%);
+    --danger: hsl(0, 100%, 40%);
+}
+
 * {
     box-sizing: border-box;
 }
@@ -14,7 +21,7 @@ body {
 header {
     background-color: hsl(0, 0%,30%);
     border-radius: 15px;
-    margin-top: -20px;
+    margin-top: -15px;
     padding-top: 20px;
 }
 
@@ -49,7 +56,7 @@ section {
 .input-row {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 #taskInput {
@@ -68,6 +75,7 @@ section {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
+    font-weight: bold;
 }
 #addTask:hover { background: hsl(39, 100%, 60%); transform: scale(1.05);}
 #addTask:active{ background: hsl(39, 100%, 70%); transform: scale(0.95);}
@@ -101,6 +109,58 @@ section {
   stroke: hsl(200, 100%, 50%); 
 }
 
+/* ================= Filter ================= */
+#showFilterBtn { 
+    margin: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    transition: transform 0.25s ease, stroke 0.25s ease;
+}
+#showFilterBtn:hover { transform: scale(1.1);}
+#showFilterBtn:active { transform: scale(0.95);}
+
+#showFilterImg { width: 40px; height: auto;} 
+
+.filterBtn {
+    background-color: hsl(39, 100%, 70%);
+    color: hsl(0, 0%,20%);
+    font-weight: bold;
+    margin: 3px;
+    padding: 5px;
+    border: none;
+    border-radius: 10px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#filter.visible .filterBtn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#filter.visible .filterBtn:nth-child(1) { transition-delay: 0.1s; }
+#filter.visible .filterBtn:nth-child(2) { transition-delay: 0.2s; }
+#filter.visible .filterBtn:nth-child(3) { transition-delay: 0.3s; }
+#filter.visible .filterBtn:nth-child(4) { transition-delay: 0.4s; }
+
+#filter {
+    display: flex;
+    opacity: 0;
+    margin: 10px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.4s ease;
+}
+#filter.visible {
+    max-height: 200px;
+    opacity: 1;
+}
+
+/* ================= Hint ================= */
 .hint {
     color: hsl(0, 0%, 30%);
     opacity: 0.7;
@@ -138,11 +198,6 @@ section {
     flex: 1 1 auto;        
     min-width: 0;           
 }
-
-.fade-in-start { opacity: 0; transform: translateY(-10px); }
-.fade-in-end   { opacity: 1; transform: translateY(0); transition: all 0.3s ease; }
-.fade-out      { opacity: 0; transform: translateY(10px); transition: all 0.3s ease; }
-
 
 .btn-group {
     display: flex;
@@ -224,22 +279,6 @@ li.done .task-text {
     color: white;
 }
 
-/* ================= Countdown Timer ================= */
-.summerTimer {
-    font-size: 2rem;
-    background-color: hsl(0, 0%, 90%);
-    padding: 10px 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);   
-    margin-bottom: 15px; 
-}
-
-#summerTimerText {
-    font-weight:400;
-    margin-bottom: 20px;
-    font-size: 2rem;
-}
-
 #taskWarning {
     display: none;
     color: hsl(0, 100%, 50%);
@@ -265,7 +304,7 @@ li.done .task-text {
     }
 
     .headerText {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
         margin: 3px 0;
         padding: 3px;
     }
@@ -286,19 +325,16 @@ li.done .task-text {
     }
 
     .input-row {
-        flex-direction: column;
-        gap: 10px;
+        flex-direction: row;
+        display: flex;
     }
 
     #taskInput {
-        margin-right: 0;
-        width: 100%;
         margin-right: 0;
         font-size: 1rem;
     }
 
     #addTask {
-        width: 100%;
         margin: 0;
         font-size: 1rem;
     }
@@ -306,39 +342,22 @@ li.done .task-text {
     .hint {
         font-size: 1rem;
     }
+
     #taskList li {
         flex-direction: column;
         align-items: flex-start;
         gap: 6px;
+        font-size: 1.1rem;
     }
 
     .btn-group {
         width: 100%;
         display: flex;
         justify-content: flex-end;
-        margin-top: -30px;
-    }
-
-    .summerTimer {
-        font-size: 1.5rem;
-        text-align: center;
-        padding: 8px 15px;
-    }
-
-    #summerTimerText {
-        font-size: 1.5rem;
-        line-height: 1.4;
+        margin-top: -28px;
     }
 
     #taskWarning {
-        font-size: 1.5rem;
-        text-align: center;
+        font-size: 1.3rem;
     }
-}
-/* For very small phones */
-@media (max-width: 480px) {
-    .headerText { font-size: 1rem; }
-    #todolistText { font-size: 1.2rem; }
-    #taskInput, #addTask { font-size: 0.9rem; }
-    .summerTimer { font-size: 1.2rem; }
 }

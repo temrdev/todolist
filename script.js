@@ -67,8 +67,18 @@ async function updateFact() {
 }
 updateFact(); setInterval(updateFact, 24 * 60 * 60 * 1000);
 
+
+//Filter
+const showFilter = document.getElementById("showFilterBtn");
+const filter = document.getElementById("filter");
+
+showFilter.addEventListener("click", () => {
+    filter.classList.toggle("visible");
+}); 
+
+//Hint
 const hint = document.getElementById("hint");
-if (localStorage.getItem("hintDismissed") === "false") {
+if (localStorage.getItem("hintDismissed") === "true") {
     hint.classList.add("hidden");
 }
 hint.addEventListener("click", () => {
@@ -76,13 +86,14 @@ hint.addEventListener("click", () => {
     localStorage.setItem("hintDismissed", "true");
 });
 
+
+//  My To-Do List
 const taskInput = document.getElementById("taskInput");
 const addTaskBtn = document.getElementById("addTask");
 const taskList = document.getElementById("taskList");
 const editTaskBtn = document.getElementById("editTask");
 
-let editMode = false;
-let dragSrcEl = null;
+let editMode = false; let dragSrcEl = null;
 
 // Load tasks from localStorage
 function loadTasks() {
@@ -214,25 +225,6 @@ taskInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") addTaskBtn.click();
 });
 
-// summer timer, countdown 
-function updateCountdown() { 
-    const now = new Date();
-    const endOfSummer = new Date(now.getFullYear(), 7, 31, 23, 59, 59); // August 31
-    let diff = Math.floor((endOfSummer - now) / 1000);
-    const countdownElem = document.getElementById("countdown");
-    if (diff <= 0) { 
-        countdownElem.innerText = "Summer is ended!"; 
-        return; 
-    } 
-    const pad = num => String(num).padStart(2, "0"); 
-    const days = Math.floor(diff / (60 * 60 * 24)); 
-    const hours = Math.floor((diff / 3600) % 24); 
-    const minutes = Math.floor((diff / 60) % 60); 
-    const seconds = diff % 60; 
-    document.getElementById("timeLeft").innerText = `${days}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)} left to the end of summer!`; 
-} 
-setInterval(updateCountdown, 1000); 
-updateCountdown();
 
 // Check tasks and show warning
 function checkOutstandingTasks() {
@@ -287,13 +279,11 @@ function handleDrop(e) {
     e.stopPropagation();
 
     if (dragSrcEl !== this) {
-        dragSrcEl.parentNode.removeChild(dragSrcEl);
-        this.insertAdjacentHTML("beforebegin", e.dataTransfer.getData("text/html"));
-        const newEl = this.previousSibling;
-        addDnDHandlers(newEl);
+        this.parentNode.insertBefore(dragSrcEl, this); 
         saveTasks();
     }
 }
+
 
 function handleDragEnd() {
     this.classList.remove("dragging");
