@@ -212,7 +212,7 @@ function deleteTask(li, modal) {
       modal.remove();
     }
     li.addEventListener("transitionend", cleanup, { once: true });
-    setTimeout(cleanup, 1000);
+    setTimeout(cleanup, 100);
 }
 
 // ===================== Progress =====================
