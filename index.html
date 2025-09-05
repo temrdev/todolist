@@ -11,7 +11,6 @@
         <h2 id="greeting" class="headerText"></h2>
         <h2 id="weather" class="headerText"></h2>
         <h2 id="fact" class="headerText"></h2>
-        <h2 id="quote" class="headerText"></h2>
     </header>
     
     <main>
@@ -30,17 +29,18 @@
                 </button>
             </div>
             <div id="filter">
-                <button id="filterAll" class="filterBtn">All</button>
-                <button id="filterPending" class="filterBtn">Pending</button>
-                <button id="filterCompleted" class="filterBtn">Completed</button>
-                <button id="filterOverdue" class="filterBtn">Overdue</button>
+                <button id="filterAll" class="filterBtn" data-filter="all">All</button>
+                <button id="filterPending" class="filterBtn" data-filter="pending">Pending</button>
+                <button id="filterCompleted" class="filterBtn" data-filter="completed">Completed</button>
+                <button id="filterOverdue" class="filterBtn" data-filter="overdue">Overdue</button>
             </div>
 
             <h3 class="hint" id="hint"> 💡 Tip: click on a task to mark it as done! (Click to not show again)</h3>
             <ul id="taskList"></ul>
-            <div id="resultBar">
-                <!-- Soon... -->
+            <div id="progressContainer">
+                <div id="progressBar"></div>
             </div>
+            <p id="progressText"></p>
         </section>
 
         <section>

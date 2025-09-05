@@ -1,56 +1,59 @@
-/* ================= General ================= */
+/* ================== Theme & Reset ================== */
 :root {
-    --primary: hsl(39, 100%, 50%);
-    --primary-hover: hsl(39, 100%, 60%);
-    --primary-active: hsl(39, 100%, 70%);
-    --danger: hsl(0, 100%, 40%);
+  --primary: hsl(39, 100%, 50%);
+  --primary-hover: hsl(39, 100%, 60%);
+  --primary-active: hsl(39, 100%, 70%);
+  --danger: hsl(0, 100%, 40%);
+  --gray-dark: hsl(0, 0%, 30%);
+  --gray: hsl(0, 0%, 60%);
+  --gray-light: hsl(0, 0%, 90%);
 }
 
-* {
+* , *::before, *::after{
     box-sizing: border-box;
 }
 
 body {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     background: grey;
-    margin: 0;
-    padding: 0;
+    margin: 0; padding: 0;
+    line-height: 1.5;
 }
 
 /* ================= Header ================= */
 header {
-    background-color: hsl(0, 0%,30%);
+    background: var(--gray-dark);
     border-radius: 15px;
     margin-top: -15px;
     padding-top: 20px;
 }
 
 .headerText {
-    font-size: 1.5rem;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 10px;
-    backdrop-filter: blur(5px);
-    text-align: center;
-    color: #fff;
-    transition: transform 0.3s, box-shadow 0.3s;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 1.5rem;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  text-align: center;
+  color: #fff;
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 /* ================= Section ================= */
 section {
-    max-width: 800px;
-    margin: 20px auto;
-    background: hsl(0, 0%, 60%);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: var(--gray);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 #todolistText {
     font-size: 2rem;
     text-align: center;
-    margin-top: 0px;
+    margin: 0;
 }
 
 .input-row {
@@ -63,147 +66,159 @@ section {
     flex: 1;
     padding: 8px;
     margin-right: 8px;
-    border: 1px solid hsl(0, 0%, 40%);
+    border: 1px solid var(--gray-dark);
     border-radius: 4px;
 }
 
 #addTask {
     padding: 8px 16px;
     border: none;
-    background: hsl(39, 100%, 50%);
+    background: var(--primary);
     color: hsl(0, 0%, 100%);
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
     font-weight: bold;
 }
-#addTask:hover { background: hsl(39, 100%, 60%); transform: scale(1.05);}
-#addTask:active{ background: hsl(39, 100%, 70%); transform: scale(0.95);}
+#addTask:hover { background: var(--primary-hover); transform: scale(1.05);}
+#addTask:active{ background: var(--primary-active); transform: scale(0.95);}
 
+/* ================== Icon Buttons ================== */
 .svg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.svg-btn .icon {
+  transform-origin: center;
+  transition: transform 0.25s, stroke 0.25s;
+}
+
+.svg-btn .icon path {
+  stroke: var(--primary);
+  transition: stroke 0.25s;
+}
+
+.svg-btn:hover .icon       { transform: scale(1.1); }
+.svg-btn:hover .icon path  { stroke: var(--primary-hover); }
+.svg-btn:active .icon      { transform: scale(0.95); }
+.svg-btn:active .icon path { stroke: var(--primary-active)}
+
+#editTask.active .icon path { stroke: hsl(200, 100%, 50%); }
+.dragging { opacity: 0.4; }
+
+/* ================= Filter ================= */
+#showFilterBtn { 
   border: none;
   background: none;
   cursor: pointer;
   padding: 0;
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  transition: transform 0.25s;
 }
-.svg-btn .icon {
-  transition: transform 0.25s ease, stroke 0.25s ease;
-  transform-origin: center center; 
-}
-.svg-btn .icon path {
-  stroke: hsl(39, 100%, 50%);
-  transition: stroke 0.25s ease;
-}
-.svg-btn:hover .icon { transform: scale(1.1);}
-.svg-btn:hover .icon path { stroke: hsl(39, 100%, 60%);}
-.svg-btn:active .icon { transform: scale(0.95);}
-.svg-btn:active .icon path { stroke: hsl(39, 100%, 70%);}
+#showFilterBtn:hover { transform: scale(1.1); }
+#showFilterBtn:active { transform: scale(0.95); }
 
-.dragging {
-  opacity: 0.4;
-}
-#editTask.active .icon path {
-  stroke: hsl(200, 100%, 50%); 
-}
+#showFilterImg { width: 40px; }
 
-/* ================= Filter ================= */
-#showFilterBtn { 
-    margin: 0;
-    border: none;
-    background: none;
-    cursor: pointer;
-    padding: 0;
-    display: inline-flex;
-    transition: transform 0.25s ease, stroke 0.25s ease;
+#filter {
+  display: flex;
+  margin: 10px;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s, opacity 0.4s;
 }
-#showFilterBtn:hover { transform: scale(1.1);}
-#showFilterBtn:active { transform: scale(0.95);}
-
-#showFilterImg { width: 40px; height: auto;} 
+#filter.visible {
+  max-height: 200px;
+  opacity: 1;
+}
 
 .filterBtn {
-    background-color: hsl(39, 100%, 70%);
-    color: hsl(0, 0%,20%);
-    font-weight: bold;
-    margin: 3px;
-    padding: 5px;
-    border: none;
-    border-radius: 10px;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+  margin: 3px;
+  padding: 5px;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  background: var(--primary-active);
+  color: hsl(0, 0%, 20%);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s, transform 0.3s;
 }
-
+.filterBtn.active {
+  background: hsl(200, 100%, 85%);
+  color: hsl(0, 0%, 10%);
+}
 #filter.visible .filterBtn {
-    opacity: 1;
-    transform: translateY(0);
+  opacity: 1;
+  transform: translateY(0);
 }
-
 #filter.visible .filterBtn:nth-child(1) { transition-delay: 0.1s; }
 #filter.visible .filterBtn:nth-child(2) { transition-delay: 0.2s; }
 #filter.visible .filterBtn:nth-child(3) { transition-delay: 0.3s; }
 #filter.visible .filterBtn:nth-child(4) { transition-delay: 0.4s; }
 
-#filter {
-    display: flex;
-    opacity: 0;
-    margin: 10px;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease, opacity 0.4s ease;
-}
-#filter.visible {
-    max-height: 200px;
-    opacity: 1;
-}
-
 /* ================= Hint ================= */
 .hint {
-    color: hsl(0, 0%, 30%);
-    opacity: 0.7;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    transition: opacity 0.5s ease;
+  margin-bottom: 10px;
+  color: var(--gray-dark);
+  opacity: 0.7;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.5s, color 0.3s;
 }
-.hint:hover {color: hsl(0, 0%, 40%);}
-.hint.hidden{display: none;}
+.hint:hover { color: hsl(0, 0%, 40%); }
+.hint.hidden { display: none; }
 
 /* ================= Task List ================= */
 #taskList {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 16px;
+  margin-bottom: 16px;
+  padding: 0;
+  list-style: none;
 }
+
 #taskList li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;      
-    min-width: 0;          
-    background-color: hsl(0, 0%, 90%);
-    margin-bottom: 8px;
-    padding: 8px;
-    border-radius: 4px;
-    transition: opacity 0.4s ease, transform 0.4s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;      
+  background: var(--gray-light);
+  margin-bottom: 8px;
+  padding: 8px;
+  border-radius: 4px;
+  min-width: 0;          
+  transition: opacity 0.3s, transform 0.3s, background-color 0.3s;
 }
 
 .task-text {
-    overflow: hidden;      
-    text-overflow: ellipsis;
-    white-space: nowrap;   
-    flex: 1 1 auto;        
-    min-width: 0;           
+  flex: 1 1 auto;        
+  min-width: 0; 
+  overflow: hidden;      
+  text-overflow: ellipsis;
+  white-space: nowrap;   
 }
 
-.btn-group {
-    display: flex;
-    gap: 8px;
-}
+.btn-group { display: flex; gap: 8px; }
 
+li.done {
+    background-color: hsl(0, 0%, 80%);
+    transition: background-color 0.3s ease;
+}
+li.done .task-text {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+li.fade-out {
+    opacity: 0;
+    transform: translate(-20px) scale(0.98);
+    transition: opacity 0.3s ease, transform 0.3s ease, max-height 0.3s ease, margin 0.3s ease, padding 0.3s ease;
+}
 .completed {   
     text-decoration: line-through;
     color: gray;
@@ -216,46 +231,34 @@ section {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-li.done .task-text {
-    text-decoration: line-through;
-    opacity: 0.6;
-}
-
-/* ================= Fade Animations ================= */
-.fade-in-start { opacity: 0; transform: translateY(-10px); }
-.fade-in-end { opacity: 1; transform: translateY(0); transition: all 0.3s ease; }
-.fade-out { opacity: 0; transform: translateY(10px); transition: all 0.3s ease; }
-
-
 .remove {
-    background: hsl(0, 100%, 40%);
-    border: none;
-    border-radius: 4px;
-    padding: 4px 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: var(--danger);
+  color: #fff;
+  transition: background-color 0.3s, transform 0.3s;
 }
-.remove:hover{ background-color: hsl(0, 100%, 50%); transform: scale(1.1);}
-.remove:active{ background-color: hsl(0, 100%, 60%); transform: scale(0.95);}
+.remove:hover  { background: hsl(0, 100%, 50%); transform: scale(1.1); }
+.remove:active { background: hsl(0, 100%, 60%); transform: scale(0.95); }
 
 /* ================= Modal ================= */
 .modal {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: rgba(0,0,0,0.6);
   display: flex;
   justify-content: center;
   align-items: center;
+  background: rgba(0,0,0,0.6);
   opacity: 0; 
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s;
   z-index: 9999;
 }
-.modal.show{
-    opacity: 1;
-    pointer-events: auto;
-}
+.modal.show { opacity: 1; pointer-events: auto; }
+
 .modal-content {
   background: white;
   padding: 20px;
@@ -263,101 +266,71 @@ li.done .task-text {
   text-align: center;
 }
 .modal-content button {
-    margin: 5px;
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  margin: 5px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
-.modal-content .confirm {
-    background: red;
-    color: white;
-}
-
-.modal-content .cancel {
-    background: gray;
-    color: white;
-}
+.modal-content .confirm { background: red; color: white; }
+.modal-content .cancel  { background: gray; color: white; }
 
 #taskWarning {
-    display: none;
-    color: hsl(0, 100%, 50%);
-    font-size: 2rem;
+  display: none;
+  font-size: 2rem;
+  color: hsl(0, 100%, 50%);
 }
+/* ================= Progress Bar ================= */
+#progressContainer {
+  width: 100%;
+  height: 20px;
+  margin: 10px 0;
+  background: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+}
+#progressBar {
+  width: 0%;
+  height: 100%;
+  background: #4caf50;
+  transition: width 0.3s;
+}
+#progressText {}
 
+/* ================= Fade Animations ================= */
+.fade-in-start { opacity: 0; transform: translateY(-10px); }
+.fade-in-end   { opacity: 1; transform: translateY(0); transition: all 0.3s; }
+.fade-gone     { opacity: 0; transform: translateY(10px); transition: all 0.3s; }
 
 /* ==================== MOBILE ==================== */
 @media (max-width: 600px) {
-    * {
-        box-sizing: border-box;
-        max-width: 100%;
-    }
+  body { font-size: clamp(15px, 2vw, 18px); }
 
-    body {
-        font-size: clamp(15px, 2vw, 18px);
-    }
+  header {
+    border-radius: 10px;
+    padding: 5px;
+    padding-top: 20px;
+  }
 
-    header {
-        border-radius: 10px;
-        padding: 5px;
-        padding-top: 20px;
-    }
+  .headerText { font-size: 1.1rem; margin: 3px 0; padding: 3px; }
+  section     { margin: 20px 10px; padding: 20px; max-width: 95%; }
 
-    .headerText {
-        font-size: 1.1rem;
-        margin: 3px 0;
-        padding: 3px;
-    }
-    section {
-        margin: 20px 10px;
-        padding: 20px;
-        max-width: 95%;
-    }
+  h1, #todolistText { font-size: 1.5rem; text-align: center; }
 
-    h1 {
-        font-size: 1.4rem;
-        text-align: center;
-    }
+  .input-row { flex-direction: row; }
 
-    #todolistText {
-        font-size: 1.5rem;
-        text-align: center;
-    }
+  #taskInput, #addTask, .hint { font-size: 1rem; }
 
-    .input-row {
-        flex-direction: row;
-        display: flex;
-    }
-
-    #taskInput {
-        margin-right: 0;
-        font-size: 1rem;
-    }
-
-    #addTask {
-        margin: 0;
-        font-size: 1rem;
-    }
-
-    .hint {
-        font-size: 1rem;
-    }
-
-    #taskList li {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 6px;
-        font-size: 1.1rem;
-    }
-
-    .btn-group {
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-        margin-top: -28px;
-    }
-
-    #taskWarning {
-        font-size: 1.3rem;
-    }
+  #taskList li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    font-size: 1.1rem;
+  }
+  .btn-group {
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: -28px;
+  }
+  #taskWarning { font-size: 1.3rem; }
 }
