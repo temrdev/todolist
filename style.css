@@ -303,34 +303,72 @@ li.fade-out {
 .fade-gone     { opacity: 0; transform: translateY(10px); transition: all 0.3s; }
 
 /* ==================== MOBILE ==================== */
-@media (max-width: 600px) {
-  body { font-size: clamp(15px, 2vw, 18px); }
+@media (max-width: 400px) {
+  body {
+    font-size: 15px;
+  }
 
   header {
-    border-radius: 10px;
-    padding: 5px;
-    padding-top: 20px;
+    padding: 2px;
+    padding-top: 15px;
+    border-radius: 8px;
   }
 
-  .headerText { font-size: 1.1rem; margin: 3px 0; padding: 3px; }
-  section     { margin: 20px 10px; padding: 20px; max-width: 95%; }
+  .headerText {
+    font-size: 1.1rem;
+    padding: 2px;
+  }
+  section {
+    margin: 13px 0;
+    padding: 8px;
+    max-width: 100%;
+    border-radius: 6px;
+  }
 
-  h1, #todolistText { font-size: 1.5rem; text-align: center; }
+  h1, #todolistText {
+    font-size: 1.3rem;
+    text-align: center;
+    margin: 5px;
+  }
 
-  .input-row { flex-direction: row; }
+  .input-row {
+    flex-direction: row;
+    gap: 5px;
+  }
 
-  #taskInput, #addTask, .hint { font-size: 1rem; }
+  #filter {
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 5px;
+  }
 
-  #taskList li {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
+  .filterBtn {
+    font-size: 0.85rem;
+  }
+
+   #taskList li {
+    padding: 6px;
     font-size: 1.1rem;
   }
-  .btn-group {
-    width: 100%;
-    justify-content: flex-end;
-    margin-top: -28px;
+
+  .btn-group .svg-btn,
+  .btn-group .remove {
+    flex: 1 1 auto;
+    min-width: 40px;
   }
-  #taskWarning { font-size: 1.3rem; }
+
+  #progressContainer {
+    height: 10px;
+    border-radius: 6px;
+  }
+
+  #progressText {
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  #taskWarning {
+    font-size: 1rem;
+    text-align: center;
+  }
 }
