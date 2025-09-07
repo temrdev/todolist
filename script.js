@@ -13,6 +13,9 @@ const hint          = document.getElementById("hint");
 const progressBar   = document.getElementById("progressBar");
 const progressText  = document.getElementById("progressText");
 const taskWarning   = document.getElementById("taskWarning");
+const noteInput = document.getElementById("noteInput");
+const addNoteBtn = document.getElementById("addNote");
+const noteGrid = document.getElementById("noteGrid");
 
 // ===================== Helpers =====================
 const getTasks = () => taskList.querySelectorAll("li");
@@ -156,7 +159,7 @@ function addTaskToDOM(text, done = false) {
 
   const removeBtn = document.createElement("button");
   removeBtn.className = "remove";
-  removeBtn.innerHTML = `❌`; // (simplified)
+  removeBtn.innerHTML = `❌`; 
   removeBtn.addEventListener("click", e => {
     e.stopPropagation();
     showDeleteModal(li);
@@ -264,6 +267,50 @@ function checkOutstandingTasks() {
     taskWarning.style.color = match.color;
   }
 }
+
+// ===================== Notes =====================
+let notes = JSON.parse(localStorage.getItem("notes")) || [];
+
+const pastelColors = [
+  "#FFEB99", "#FFD6D6", "#D6FFD6", "#D6E5FF", "#FFF0D6", "#E6D6FF"
+];
+
+function saveNotes() {
+  localStorage.setItem("notes", JSON.stringify(notes));
+}
+
+function renderNotes() {
+  noteGrid.innerHTML = "";
+  notes.forEach((note, index) => {
+    const div = document.createElement("div");
+    div.className = "note";
+    div.style.background = pastelColors[index % pastelColors.length];
+    div.textContent = note;
+
+    const removeBtn = document.createElement("button");
+    removeBtn.className = "remove-note";
+    removeBtn.textContent = "×";
+    removeBtn.addEventListener("click", () => {
+      notes.splice(index, 1);
+      saveNotes();
+      renderNotes();
+    });
+
+    div.appendChild(removeBtn);
+    noteGrid.appendChild(div);
+  });
+}
+
+addNoteBtn.addEventListener("click", () => {
+  const text = noteInput.value.trim();
+  if (!text) return;
+  notes.push(text);
+  saveNotes();
+  renderNotes();
+  noteInput.value = "";
+});
+
+renderNotes();
 
 // ===================== Drag & Drop =====================
 function addDnDHandlers(el) {

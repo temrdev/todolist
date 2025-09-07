@@ -41,13 +41,17 @@
                 <div id="progressBar"></div>
             </div>
             <p id="progressText"></p>
+            <div id="taskWarning"></div>
         </section>
 
         <section>
-            <div id="taskWarning"></div>
             <div id="notes">
-                <h1>Notes</h1>
-                <!-- Soon... -->
+                <h1 id="notesText">Notes</h1>
+                <div class="input-row">
+                    <textarea id="noteInput" placeholder="Write something..."></textarea>
+                    <button id="addNote">Add</button>
+                </div>
+                <div id="noteGrid"></div>
             </div>
         </section>
     </main>

@@ -24,13 +24,13 @@ body {
 header {
     background: var(--gray-dark);
     border-radius: 15px;
-    margin-top: -15px;
+    margin-top: -20px;
     padding-top: 20px;
 }
 
 .headerText {
-  margin: 10px 0;
-  padding: 10px;
+  margin: 8px 0;
+  padding: 4px;
   font-size: 1.5rem;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   text-align: center;
@@ -42,7 +42,7 @@ header {
 
 /* ================= Section ================= */
 section {
-  max-width: 800px;
+  max-width: 900px;
   margin: 20px auto;
   padding: 20px;
   background: var(--gray);
@@ -51,27 +51,29 @@ section {
 }
 
 #todolistText {
-    font-size: 2rem;
-    text-align: center;
-    margin: 0;
+  font-size: 2rem;
+  text-align: center;
+  margin: 5px;
+  margin-top: -10px;
 }
 
 .input-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
 }
 
 #taskInput {
-    flex: 1;
-    padding: 8px;
-    margin-right: 8px;
-    border: 1px solid var(--gray-dark);
-    border-radius: 4px;
+  flex: 1;
+  padding: 8px;
+  margin-right: 6px;
+  border: 1px solid var(--gray-dark);
+  border-radius: 6px;
+  font-size: 18px;
 }
 
 #addTask {
-    padding: 8px 16px;
+    padding: 10px 20px;
     border: none;
     background: var(--primary);
     color: hsl(0, 0%, 100%);
@@ -246,7 +248,7 @@ li.fade-out {
 /* ================= Modal ================= */
 .modal {
   position: fixed;
-  top: 0; left: 0;
+  inset: 0;
   width: 100%; height: 100%;
   display: flex;
   justify-content: center;
@@ -256,6 +258,7 @@ li.fade-out {
   pointer-events: none;
   transition: opacity 0.3s;
   z-index: 9999;
+  top:0; left:0; width:100%; height:100%;
 }
 .modal.show { opacity: 1; pointer-events: auto; }
 
@@ -264,6 +267,7 @@ li.fade-out {
   padding: 20px;
   border-radius: 8px;
   text-align: center;
+  max-width: 90%;
 }
 .modal-content button {
   margin: 5px;
@@ -277,7 +281,7 @@ li.fade-out {
 
 #taskWarning {
   display: none;
-  font-size: 2rem;
+  font-size: 1.3rem;
   color: hsl(0, 100%, 50%);
 }
 /* ================= Progress Bar ================= */
@@ -297,6 +301,79 @@ li.fade-out {
 }
 #progressText {}
 
+/* ================= Notes ================= */
+#notes {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+#notesText {
+  text-align: center;
+  margin-bottom: 12px;
+  font-size: 2rem;
+}
+
+#noteInput {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid var(--gray-dark);
+  resize: vertical;
+  min-height: 40px;
+  font-size: 1.1rem;
+}
+
+#addNote {
+  height: 55px;
+  padding: 10px 16px;
+  margin-left: 8px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  background: var(--primary);
+  color: white;
+  transition: transform 0.2s;
+}
+#addNote:hover { transform: scale(1.05); background: var(--primary-hover); }
+#addNote:active { transform: scale(0.95); background: var(--primary-active); }
+
+#noteGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.note {
+  position: relative;
+  padding: 12px;
+  min-height: 100px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  transition: transform 0.2s;
+}
+.note:hover { transform: rotate(1deg) scale(1.02); }
+
+.note .remove-note {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: rgba(0,0,0,0.3);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+}
+
 /* ================= Fade Animations ================= */
 .fade-in-start { opacity: 0; transform: translateY(-10px); }
 .fade-in-end   { opacity: 1; transform: translateY(0); transition: all 0.3s; }
@@ -306,49 +383,60 @@ li.fade-out {
 @media (max-width: 400px) {
   body {
     font-size: 15px;
+    font-weight: 500;
   }
 
   header {
     padding: 2px;
     padding-top: 15px;
-    border-radius: 8px;
+    border-radius: 7px;
   }
 
   .headerText {
-    font-size: 1.1rem;
-    padding: 2px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 0;
   }
   section {
-    margin: 13px 0;
-    padding: 8px;
-    max-width: 100%;
-    border-radius: 6px;
+    margin: 12px 0;
+    padding: 7px;
+    max-width: 100%;  
+    border-radius: 7px;
   }
 
   h1, #todolistText {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     text-align: center;
     margin: 5px;
   }
 
   .input-row {
-    flex-direction: row;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
     gap: 5px;
   }
 
+  #taskInput {
+    flex: 1;         
+    min-width: 70px;       
+  }
+  
   #filter {
     flex-wrap: wrap;
     justify-content: center;
-    margin: 5px;
+    margin: 4px;
+    margin-bottom: -9px;
   }
 
   .filterBtn {
-    font-size: 0.85rem;
+    flex: 1 1 auto;  
+    min-width: 70px; 
   }
 
    #taskList li {
-    padding: 6px;
-    font-size: 1.1rem;
+    padding: 8px;
+    font-size: 1.2rem;
   }
 
   .btn-group .svg-btn,
@@ -363,12 +451,20 @@ li.fade-out {
   }
 
   #progressText {
-    font-size: 0.9rem;
+    font-size: 1rem;
     text-align: center;
   }
 
   #taskWarning {
     font-size: 1rem;
     text-align: center;
+  }
+
+  #notes {
+    padding-bottom: 10px;
+  }
+
+  #noteGrid {
+    grid-template-columns: 1fr;
   }
 }
