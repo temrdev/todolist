@@ -219,20 +219,52 @@ function deleteTask(li, modal) {
 }
 
 // ===================== Progress =====================
+let celebrationCooldown = false; 
+let hasCelebrated = false;       
+const cooldownTime = 10000;  
+const celebrationMusic = new Audio("celebration.mp3"); 
+
 function updateProgress() {
   if (!progressBar || !progressText) return;
+
   const tasks = getTasks();
   const done = getDoneTasks();
 
   if (tasks.length === 0) {
     progressBar.style.width = "0%";
     progressText.textContent = "No tasks yet";
+    hasCelebrated = false; 
     return;
   }
 
   const percent = Math.round((done.length / tasks.length) * 100);
   progressBar.style.width = percent + "%";
   progressText.textContent = `You completed ${percent}% of your tasks!`;
+
+  if (percent === 100 && !hasCelebrated) {
+    celebrate();
+    hasCelebrated = true;
+  } else if (percent < 100) {
+    hasCelebrated = false; 
+  }
+}
+
+function celebrate() {
+  if (celebrationCooldown) return;
+  celebrationCooldown = true;
+
+  confetti({
+    particleCount: 80,
+    spread: 120,
+    origin: { y: 0.7 }
+  });
+
+  celebrationMusic.currentTime = 0;
+  celebrationMusic.play();
+
+  setTimeout(() => {
+    celebrationCooldown = false;
+  }, cooldownTime);
 }
 
 // ===================== Warnings =====================
@@ -301,13 +333,19 @@ function renderNotes() {
   });
 }
 
-addNoteBtn.addEventListener("click", () => {
+function addNote() {
   const text = noteInput.value.trim();
   if (!text) return;
   notes.push(text);
   saveNotes();
   renderNotes();
   noteInput.value = "";
+}
+
+addNoteBtn.addEventListener("click", addNote);
+
+noteInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") addNote();
 });
 
 renderNotes();
