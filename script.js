@@ -215,14 +215,14 @@ function deleteTask(li, modal) {
       modal.remove();
     }
     li.addEventListener("transitionend", cleanup, { once: true });
-    setTimeout(cleanup, 100);
+    setTimeout(cleanup, 200);
 }
 
 // ===================== Progress =====================
 let celebrationCooldown = false; 
 let hasCelebrated = false;       
-const cooldownTime = 10000;  
-const celebrationMusic = new Audio("celebration.mp3"); 
+const cooldownTime = 18000;  //18 seconds because i am 18 y.o!
+const celebrationMusic = new Audio("audio/celebration.mp3"); 
 
 function updateProgress() {
   if (!progressBar || !progressText) return;
@@ -254,8 +254,8 @@ function celebrate() {
   celebrationCooldown = true;
 
   confetti({
-    particleCount: 80,
-    spread: 120,
+    particleCount: 70,
+    spread: 140,
     origin: { y: 0.7 }
   });
 
@@ -270,7 +270,7 @@ function celebrate() {
 // ===================== Warnings =====================
 function checkOutstandingTasks() {
   const all = getTasks();
-  const pending = [...all].filter(t => !t.classList.contains("done"));
+  const pending = [...  all].filter(t => !t.classList.contains("done"));
   const done = getDoneTasks();
 
   taskWarning.style.display = "block";
